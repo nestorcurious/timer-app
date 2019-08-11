@@ -1,0 +1,33 @@
+//Reducer
+export const reducer = (state = {}, action) => {
+  switch(action.type){
+    
+    case 'USB_CONNECT':
+      return{
+        ...state,
+        isConnected:action.payload.isConnected,
+        gameStatus: 'CONNECTED'
+      }
+
+    case 'START_GAME':
+      if (!state.isConnected ) return state
+      if (!state.gamePhase !== 'READY' ) return state
+
+      return {
+        ...state, 
+        gamePhase: 'COUNTDOWN',
+        time: +new Date()
+      }
+      
+    
+    case 'RESTART_GAME':
+      return {
+        isConnected: state.isConnected,
+        isGameStarted: false,
+        isGameOver: false
+      }
+
+    default:
+      return state
+  }
+}
